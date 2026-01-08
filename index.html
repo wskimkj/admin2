@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -74,7 +75,7 @@
     /* ===== main sidebar ===== */
     .main-sidebar{
       position:absolute; top:0; left:0;
-      width:82px; height:100%;
+      width:90px; height:100%;
       background: var(--main-sidebar-bg);
       display:flex; flex-direction:column; align-items:center;
       padding: 16px 0;
@@ -128,9 +129,18 @@
     }
 
     /* ===== footer buttons ===== */
-    .nav-footer-btn{
-      margin-top: auto;
-      margin-bottom: 6px;
+    .nav-footer{
+  margin-top: auto;
+  padding-bottom: 6px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap: 10px;
+}
+
+.nav-footer-btn{
+  margin-top: 0;
+  margin-bottom: 0;
       border: none;
       background: rgba(255,255,255,0.18);
       color: rgba(255,255,255,0.92);
@@ -152,6 +162,27 @@
       background: rgba(255,255,255,0.26);
       box-shadow: 0 14px 28px rgba(15,23,42,0.22);
     }
+
+    /* ✅ footer button icon-only (event / account) */
+    .nav-footer-btn.icon-only{
+      width: 44px;
+      justify-content: center;
+      padding: 8px;
+      gap: 0;
+    }
+    .nav-footer-btn.icon-only span{ display:none; }
+
+    /* ✅ screen-reader only */
+    .sr-only{
+      position:absolute;
+      width:1px;height:1px;
+      padding:0;margin:-1px;
+      overflow:hidden;
+      clip:rect(0,0,0,0);
+      white-space:nowrap;
+      border:0;
+    }
+
 
     /* ===== sub sidebars ===== */
     .sub-sidebar{
@@ -1225,6 +1256,136 @@
     }
     .search-mini-btn:hover{ transform: translateY(-1px); }
 
+    /* ======================
+   ✅ Radial Menu (Right Click)
+   ====================== */
+.radial-wrap{
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: none;
+}
+.radial-wrap.show{ display:block; }
+
+.radial-backdrop{
+  position:absolute;
+  inset:0;
+  background: rgba(15,23,42,0.06);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.radial-menu{
+  position:absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.62);
+  border: 1px solid rgba(255,255,255,0.70);
+  box-shadow: 0 24px 70px rgba(15,23,42,0.22);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transform: translate(-50%, -50%);
+  pointer-events:auto;
+}
+
+.radial-center{
+  position:absolute;
+  left:50%; top:50%;
+  transform: translate(-50%, -50%);
+  width: 74px; height: 74px;
+  border-radius: 999px;
+  border: 1px solid rgba(15,23,42,0.08);
+  background: rgba(255,255,255,0.88);
+  box-shadow: 0 14px 28px rgba(15,23,42,0.14);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap: 2px;
+  user-select:none;
+}
+.radial-center .t1{
+  font-size: 10px;
+  font-weight: 1000;
+  color: rgba(15,23,42,0.62);
+  letter-spacing: .08em;
+}
+.radial-center .t2{
+  font-size: 10px;
+  font-weight: 900;
+  color: rgba(15,23,42,0.45);
+}
+
+/* item */
+.rm-item{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%, -50%);
+  border:none;
+  cursor:pointer;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(15,23,42,0.10);
+  box-shadow: 0 14px 30px rgba(15,23,42,0.16);
+  border-radius: 999px;
+  padding: 10px 12px;
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  font-weight: 1000;
+  color: rgba(15,23,42,0.86);
+  user-select:none;
+  transition: transform .12s ease, box-shadow .12s ease;
+  min-width: 120px;
+}
+.rm-item:hover{
+  box-shadow: 0 18px 36px rgba(15,23,42,0.20);
+}
+
+/* icon pill */
+.rm-ico{
+  width: 34px;
+  height: 34px;
+  border-radius: 14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(124,58,237,0.10);
+  border: 1px solid rgba(124,58,237,0.18);
+  color: rgba(124,58,237,0.95);
+  font-size: 18px;
+  flex: 0 0 auto;
+}
+.rm-label{
+  font-size: 12px;
+  font-weight: 1000;
+  letter-spacing: -0.2px;
+}
+
+/* ✅ icon-only (ID/PW, event) */
+.rm-item.icon-only{
+  min-width: auto;
+  padding: 10px;
+  width: 56px;
+  height: 56px;
+  justify-content:center;
+}
+.rm-item.icon-only .rm-label{ display:none; }
+
+/* small note */
+.rm-hint{
+  position:absolute;
+  left:50%;
+  top: calc(50% + 92px);
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 900;
+  color: rgba(15,23,42,0.45);
+  user-select:none;
+}
+
+
     @media (max-width: 900px) {
       body{ padding:10px; overflow:auto; }
       .app-shell{ height:auto; min-height: calc(100vh - 20px); }
@@ -1237,7 +1398,38 @@
         min-height:70vh;
       }
     }
-  </style>
+  
+/* === Radial Menu additions === */
+.radial-wrap{position:fixed;inset:0;z-index:9998;display:none;}
+.radial-wrap.show{display:block;user-select:none;}
+.radial-backdrop{position:absolute;inset:0;background:transparent;}
+.radial-menu{position:absolute;width:260px;height:260px;border-radius:999px;
+background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.7);
+box-shadow:0 24px 70px rgba(15,23,42,.22);backdrop-filter:blur(16px);
+transform:translate(-50%,-50%);}
+.radial-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+width:74px;height:74px;border-radius:999px;background:rgba(255,255,255,.9);
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+font-size:10px;font-weight:900;}
+.rm-item{position:absolute;left:50%;top:50%;border:none;border-radius:999px;
+background:#fff;box-shadow:0 14px 30px rgba(0,0,0,.16);
+display:flex;align-items:center;gap:8px;padding:10px 12px;
+font-weight:900;cursor:pointer;}
+.rm-item.icon-only{width:56px;height:56px;justify-content:center;}
+
+
+/* === Sidebar footer row (Account + Event) === */
+.nav-footer-row{
+  display:flex;
+  gap:8px;
+  margin-bottom:6px;
+}
+.nav-footer-row .nav-footer-btn{
+  margin:0;
+  padding:8px;
+}
+
+</style>
 </head>
 
 <body>
@@ -1256,11 +1448,6 @@
       <button class="nav-item" data-id="template" data-href="https://wskimkj.github.io/trim2/">
         <div class="nav-icon-wrap"><i class="bx bx-chat"></i></div>
         <span> 멘트</span>
-      </button>
-
-      <button class="nav-item" data-id="order" data-href="https://wskimkj.github.io/return-inf/">
-        <div class="nav-icon-wrap"><i class='bx  bxs-basket'></i></div>
-        <span> 주문 </span>
       </button>
 
       <button class="nav-item" data-id="shipment" data-href="https://wskimkj.github.io/Shipment/">
@@ -1285,27 +1472,34 @@
         <span> 시트 </span>
       </button>
     </div>
+<div class="nav-footer">
+  <button class="nav-footer-btn" id="searchWidgetBtn" type="button" title="상품 검색 위젯">
+    <i class='bx bx-search-alt-2'></i><span>Items</span>
+  </button>
 
-    <button class="nav-footer-btn" id="searchWidgetBtn" type="button" title="상품 검색 위젯">
-      <i class='bx bx-search-alt-2'></i><span>Items</span>
+  <button class="nav-footer-btn" id="phoneFormatBtn" type="button" title="전화번호 포맷">
+    <i class='bx bx-phone'></i><span>Phone</span>
+  </button>
+
+  <button class="nav-footer-btn" id="sheetNavBtn" type="button" title="키워드로 시트 찾기">
+    <i class='bx bx-search'></i><span>Sheets</span>
+  </button>
+
+  <button class="nav-footer-btn" id="trackingWidgetBtn" type="button" title="배송조회">
+    <i class='bx bx-package'></i><span>Track</span>
+  </button>
+
+  <div class="nav-footer-row" aria-label="Quick widgets">
+    <button class="nav-footer-btn icon-only" id="accountWidgetBtn" type="button" title="계정 조회">
+      <i class='bx bx-key'></i><span class="sr-only">ID/PW</span>
     </button>
 
-    <button class="nav-footer-btn" id="phoneFormatBtn" type="button" title="전화번호 포맷">
-      <i class='bx bx-phone'></i><span>Phone</span>
+    <button class="nav-footer-btn icon-only" id="adminEventBtn" type="button" title="이벤트 보기">
+      <i class='bx bx-calendar-event'></i><span class="sr-only">Event</span>
     </button>
-
-    <button class="nav-footer-btn" id="trackingWidgetBtn" type="button" title="배송조회">
-      <i class='bx bx-package'></i><span>Track</span>
-    </button>
-
-    <button class="nav-footer-btn" id="accountWidgetBtn" type="button" title="계정 조회">
-      <i class='bx bx-key'></i><span>ID/PW</span>
-    </button>
-
-    <button class="nav-footer-btn" id="adminEventBtn" type="button" title="이벤트 보기">
-      <i class='bx bx-calendar-event'></i><span>event</span>
-    </button>
-  </nav>
+  </div>
+</div>
+</nav>
 
   <!-- sheet sub sidebar -->
   <aside class="sub-sidebar" id="subSidebar">
@@ -1400,6 +1594,9 @@
   <!-- util sub sidebar -->
   <aside class="sub-sidebar" id="utilSidebar">
     <div class="sub-list">
+       <button class="sub-item util-child" data-href="https://wskimkj.github.io/return-inf/">
+        <i class='bx bx-chevron-right'></i><span>계정</span>
+      </button>
       <button class="sub-item util-child" data-href="https://wskimkj.github.io/account/">
         <i class='bx bx-chevron-right'></i><span>계정</span>
       </button>
@@ -1514,6 +1711,32 @@
     </div>
   </div>
 
+  <!-- ✅ Sheet Navigator widget -->
+<div class="search-widget" id="sheetNavWidget" style="width:480px; max-width:calc(100vw - 120px);">
+  <div class="widget-head">
+    <div class="widget-title">
+      <span class="widget-badge">SHEETS</span>
+      <span style="font-weight:1000; font-size:13px; color:rgba(15,23,42,.86);">키워드로 시트 찾기</span>
+    </div>
+
+    <div style="display:flex; gap:8px; align-items:center;">
+      <button class="widget-close" id="sheetNavClose" type="button" aria-label="닫기">✕</button>
+    </div>
+  </div>
+
+  <div class="search-search-row">
+    <input id="sheetNavInput" class="search-input" placeholder="키워드 입력 후 Enter" />
+    <button class="search-mini-btn" id="sheetNavGo" type="button" title="검색">🔎</button>
+  </div>
+
+  <div id="sheetNavStatus" style="margin: 8px 2px 10px; font-size:12px; font-weight:900; color:rgba(15,23,42,.65);">
+    키워드를 입력하세요.
+  </div>
+
+  <div class="sw-result" id="sheetNavResult"></div>
+</div>
+
+
   <!-- account widget -->
   <div class="account-widget" id="accountWidget">
     <div class="widget-head">
@@ -1587,6 +1810,19 @@
     </div>
     <div class="calendar-days" id="calendarDays"></div>
   </div>
+
+  <!-- ✅ Right-click Radial Menu -->
+<div class="radial-wrap" id="radialWrap" aria-hidden="true">
+  <div class="radial-backdrop" id="radialBackdrop"></div>
+
+  <div class="radial-menu" id="radialMenu" role="menu" aria-label="Quick Tools">
+    <div class="radial-center" id="radialCenter" title="닫기">
+      <div class="t1">TOOLS</div>
+      <div class="t2">Right click</div>
+    </div>
+    <div class="rm-hint">ESC 또는 바깥 클릭으로 닫기</div>
+  </div>
+</div>
 
 </div>
 
@@ -2333,6 +2569,215 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   phoneOutput.addEventListener("click",(e)=>{ e.preventDefault(); e.stopPropagation(); copyText(phoneOutput.textContent); });
   phoneCopy.addEventListener("click",(e)=>{ e.preventDefault(); e.stopPropagation(); copyText(phoneOutput.textContent); });
+
+
+  /* ======================
+   ✅ Sheet Navigator (keyword -> sheet)
+   ====================== */
+(function(){
+  const sheetNavBtn    = document.getElementById("sheetNavBtn");
+  const sheetNavWidget = document.getElementById("sheetNavWidget");
+  const sheetNavClose  = document.getElementById("sheetNavClose");
+  const sheetNavInput  = document.getElementById("sheetNavInput");
+  const sheetNavGo     = document.getElementById("sheetNavGo");
+  const sheetNavStatus = document.getElementById("sheetNavStatus");
+  const sheetNavResult = document.getElementById("sheetNavResult");
+
+  if(!sheetNavBtn || !sheetNavWidget || !sheetNavClose || !sheetNavInput || !sheetNavGo || !sheetNavStatus || !sheetNavResult) return;
+
+  // ✅ 네가 부여한 "표시용 시트명" + 실제 URL/GID
+  // searchCols: 특정 열만 검색하고 싶으면 0-based index 배열로 지정 (예: [0,3,5])
+  // null이면 전체 셀 검색
+  const SHEETS = [
+    { name:"회수 시트",       url:"https://docs.google.com/spreadsheets/d/1Cjoo-x9lBA5pFtGoxftdAxdoKrzt770XcPGeXOidPiI/edit?gid=2058557070#gid=2058557070", gid:2058557070, csv:`https://docs.google.com/spreadsheets/d/1Cjoo-x9lBA5pFtGoxftdAxdoKrzt770XcPGeXOidPiI/export?format=csv&gid=2058557070`, searchCols:null },
+    { name:"온라인 시트",     url:"https://docs.google.com/spreadsheets/d/1Cjoo-x9lBA5pFtGoxftdAxdoKrzt770XcPGeXOidPiI/edit?gid=0#gid=0",             gid:0,          csv:`https://docs.google.com/spreadsheets/d/1Cjoo-x9lBA5pFtGoxftdAxdoKrzt770XcPGeXOidPiI/export?format=csv&gid=0`,          searchCols:null },
+    { name:"발송 후 취소",    url:"https://docs.google.com/spreadsheets/d/1Cjoo-x9lBA5pFtGoxftdAxdoKrzt770XcPGeXOidPiI/edit?gid=716550224#gid=716550224", gid:716550224, csv:`https://docs.google.com/spreadsheets/d/1Cjoo-x9lBA5pFtGoxftdAxdoKrzt770XcPGeXOidPiI/export?format=csv&gid=716550224`, searchCols:null },
+    { name:"온라인(완료)",    url:"https://docs.google.com/spreadsheets/d/1Cjoo-x9lBA5pFtGoxftdAxdoKrzt770XcPGeXOidPiI/edit?gid=303584832#gid=303584832", gid:303584832, csv:`https://docs.google.com/spreadsheets/d/1Cjoo-x9lBA5pFtGoxftdAxdoKrzt770XcPGeXOidPiI/export?format=csv&gid=303584832`, searchCols:null },
+    { name:"미출고",          url:"https://docs.google.com/spreadsheets/d/1Cjoo-x9lBA5pFtGoxftdAxdoKrzt770XcPGeXOidPiI/edit?gid=357162286#gid=357162286", gid:357162286, csv:`https://docs.google.com/spreadsheets/d/1Cjoo-x9lBA5pFtGoxftdAxdoKrzt770XcPGeXOidPiI/export?format=csv&gid=357162286`, searchCols:null },
+
+    { name:"출고(25년)",      url:"https://docs.google.com/spreadsheets/d/1LPy69E2yPTaSwxFAYrX6qV0BZx1tW0YdonLRNqeo5Vc/edit?gid=0#gid=0",               gid:0,          csv:`https://docs.google.com/spreadsheets/d/1LPy69E2yPTaSwxFAYrX6qV0BZx1tW0YdonLRNqeo5Vc/export?format=csv&gid=0`,          searchCols:null },
+    { name:"출고(26년)",      url:"https://docs.google.com/spreadsheets/d/1LPy69E2yPTaSwxFAYrX6qV0BZx1tW0YdonLRNqeo5Vc/edit?gid=883501265#gid=883501265", gid:883501265, csv:`https://docs.google.com/spreadsheets/d/1LPy69E2yPTaSwxFAYrX6qV0BZx1tW0YdonLRNqeo5Vc/export?format=csv&gid=883501265`, searchCols:null },
+    { name:"변경",            url:"https://docs.google.com/spreadsheets/d/1LPy69E2yPTaSwxFAYrX6qV0BZx1tW0YdonLRNqeo5Vc/edit?gid=2031425693#gid=2031425693", gid:2031425693, csv:`https://docs.google.com/spreadsheets/d/1LPy69E2yPTaSwxFAYrX6qV0BZx1tW0YdonLRNqeo5Vc/export?format=csv&gid=2031425693`, searchCols:null },
+  ];
+
+  // ✅ 캐시 (같은 시트 매번 fetch 방지)
+  const CACHE = new Map(); // gid -> rows
+
+  async function fetchCsvRows(url){
+    const ctrl = new AbortController();
+    const t = setTimeout(()=>ctrl.abort(), 12000);
+    try{
+      const res = await fetch(url, { cache:"no-store", signal: ctrl.signal });
+      if(!res.ok) throw new Error(`CSV fetch 실패 (${res.status})`);
+      const text = await res.text();
+      if(/<!doctype html>|<html/i.test(text)) throw new Error("CSV 대신 HTML(권한/게시 설정 확인)");
+      return parseCsvGeneric(text); // ✅ 네가 이미 위에서 정의해둔 parseCsvGeneric 재사용
+    } finally {
+      clearTimeout(t);
+    }
+  }
+
+  function norm(s){ return String(s ?? "").toLowerCase(); }
+  function includesKeyword(cell, kw){ return norm(cell).includes(kw); }
+
+  function rowsHaveKeyword(rows, kw, searchCols){
+    // rows: [ [c1,c2...], ... ]
+    for(let i=0;i<rows.length;i++){
+      const r = rows[i] || [];
+      if(searchCols && Array.isArray(searchCols)){
+        for(const ci of searchCols){
+          if(ci != null && ci >= 0 && ci < r.length){
+            if(includesKeyword(r[ci], kw)) return true;
+          }
+        }
+      }else{
+        for(let j=0;j<r.length;j++){
+          if(includesKeyword(r[j], kw)) return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  function renderSheetMatches(matches, keyword){
+    if(!matches.length){
+      sheetNavResult.innerHTML = `
+        <div style="padding:12px; font-size:12px; font-weight:900; color:rgba(15,23,42,.55); text-align:center;">
+          "${escapeHtml(keyword)}" 포함 시트를 찾지 못했어요.
+        </div>
+      `;
+      return;
+    }
+
+    // 결과 UI: 클릭하면 mainFrame 이동, 우측에 새탭 버튼
+    const html = `
+      <table class="sw-table">
+        <thead>
+          <tr>
+            <th style="width:70%;">시트</th>
+            <th style="width:30%; text-align:right;">이동</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${matches.map(m => `
+            <tr data-sheet-row style="cursor:pointer;">
+              <td>
+                <div class="sw-name">${escapeHtml(m.name)}</div>
+                <div class="sw-sub">gid: ${escapeHtml(String(m.gid))}</div>
+              </td>
+              <td style="text-align:right;">
+                <div class="sw-stock-wrap">
+                  <button class="sw-acc-btn" type="button" data-sheet-open="inframe">IN</button>
+                  <button class="sw-acc-btn" type="button" data-sheet-open="blank">↗</button>
+                </div>
+              </td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    `;
+    sheetNavResult.innerHTML = html;
+
+    // 이벤트 바인딩
+    const trs = sheetNavResult.querySelectorAll("tr[data-sheet-row]");
+    trs.forEach((tr, idx)=>{
+      const target = matches[idx];
+      tr.addEventListener("click", ()=>{
+        // 행 클릭 = iframe 이동
+        mainFrame.src = target.url;
+        rememberFrame(target.url);
+        sheetNavWidget.classList.remove("visible");
+      });
+
+      const btnIn = tr.querySelector(`[data-sheet-open="inframe"]`);
+      const btnNew = tr.querySelector(`[data-sheet-open="blank"]`);
+
+      btnIn.addEventListener("click", (e)=>{
+        e.stopPropagation();
+        mainFrame.src = target.url;
+        rememberFrame(target.url);
+        sheetNavWidget.classList.remove("visible");
+      });
+
+      btnNew.addEventListener("click", (e)=>{
+        e.stopPropagation();
+        window.open(target.url, "_blank");
+      });
+    });
+  }
+
+  async function doSheetNavSearch(){
+    const kwRaw = sheetNavInput.value.trim();
+    if(!kwRaw){
+      sheetNavStatus.textContent = "키워드를 입력하세요.";
+      sheetNavResult.innerHTML = `<div style="padding:12px; font-size:12px; font-weight:900; color:rgba(15,23,42,.55); text-align:center;">키워드를 입력하세요.</div>`;
+      return;
+    }
+
+    const kw = kwRaw.toLowerCase();
+    sheetNavStatus.textContent = "시트 확인 중...";
+    sheetNavResult.innerHTML = `<div style="padding:12px; font-size:12px; font-weight:900; color:rgba(15,23,42,.55); text-align:center;">검색 중...</div>`;
+
+    const matches = [];
+    let checked = 0;
+
+    // 병렬로 다 던지되, 캐시 활용
+    await Promise.all(SHEETS.map(async (s)=>{
+      try{
+        let rows = CACHE.get(s.gid);
+        if(!rows){
+          rows = await fetchCsvRows(s.csv);
+          CACHE.set(s.gid, rows);
+        }
+        if(rowsHaveKeyword(rows, kw, s.searchCols)){
+          matches.push(s);
+        }
+      }catch(err){
+        // 권한 문제 등은 “실패”로만 표시 (원하면 실패 시트도 따로 표시 가능)
+        console.warn("sheet nav fetch fail:", s.name, err);
+      } finally {
+        checked++;
+        sheetNavStatus.textContent = `"${kwRaw}" 확인중... (${checked}/${SHEETS.length})`;
+      }
+    }));
+
+    matches.sort((a,b)=>a.name.localeCompare(b.name));
+    sheetNavStatus.textContent = `"${kwRaw}" 포함 시트 ${matches.length}개`;
+    renderSheetMatches(matches, kwRaw);
+  }
+
+  function openSheetNav(){
+    sheetNavWidget.classList.add("visible");
+    // 다른 패널 닫기 (네가 이미 만든 closeAllPanels 활용 가능)
+    hideAllSubSidebars(); hideCalendar(); hidePhone(); hideTracking(); hideAccount(); closePopup();
+    sheetNavInput.focus();
+  }
+  function closeSheetNav(){ sheetNavWidget.classList.remove("visible"); }
+
+  sheetNavBtn.addEventListener("click", (e)=>{
+    e.stopPropagation();
+    if(sheetNavWidget.classList.contains("visible")) closeSheetNav();
+    else openSheetNav();
+  });
+  sheetNavClose.addEventListener("click", (e)=>{ e.stopPropagation(); closeSheetNav(); });
+  sheetNavWidget.addEventListener("click", (e)=> e.stopPropagation());
+
+  sheetNavGo.addEventListener("click", (e)=>{ e.stopPropagation(); doSheetNavSearch(); });
+  sheetNavInput.addEventListener("keydown", (e)=>{
+    if(e.key === "Enter"){ e.preventDefault(); doSheetNavSearch(); }
+  });
+
+  // ESC 닫기
+  document.addEventListener("keydown", (e)=>{
+    if(e.key === "Escape"){
+      closeSheetNav();
+    }
+  });
+
+  // auto-hide 동일 적용
+  attachAutoHide(sheetNavWidget, closeSheetNav, 650);
+})();
+
 
   /* ======================
      Tracking
@@ -3208,6 +3653,129 @@ document.addEventListener("DOMContentLoaded", () => {
     e.stopPropagation();
   });
 
+    /* ======================
+     ✅ Radial Menu (Right click)
+     - 오른손 A안 고정 각도
+     - 위 4개: 아이콘 + 텍스트
+     - 아래 2개: 아이콘 only (ID/PW, event)
+     ====================== */
+  (function(){
+    const wrap = document.getElementById("radialWrap");
+    const menu = document.getElementById("radialMenu");
+    const backdrop = document.getElementById("radialBackdrop");
+    const center = document.getElementById("radialCenter");
+
+    if(!wrap || !menu || !backdrop || !center) return;
+
+    // ✅ 너가 이미 가진 버튼 ID를 그대로 "대신 클릭"
+    const actions = [
+      { id:"items",  label:"Items",  icon:"<i class='bx bx-search-alt-2'></i>", btnId:"searchWidgetBtn",   angleDeg:-90,  mode:"text" },
+      { id:"phone",  label:"Phone",  icon:"<i class='bx bx-phone'></i>",       btnId:"phoneFormatBtn",    angleDeg:-30,  mode:"text" },
+      { id:"sheets", label:"Sheets", icon:"<i class='bx bx-search'></i>",      btnId:"sheetNavBtn",        angleDeg: 30,  mode:"text" },
+      { id:"track",  label:"Track",  icon:"<i class='bx bx-package'></i>",     btnId:"trackingWidgetBtn",  angleDeg: 90,  mode:"text" },
+
+      // ✅ 아래 2개는 icon-only
+      { id:"idpw",   label:"ID/PW",  icon:"<i class='bx bx-key'></i>",         btnId:"accountWidgetBtn",   angleDeg:150,  mode:"icon" },
+      { id:"event",  label:"event",  icon:"<i class='bx bx-bell'></i>",        btnId:"adminEventBtn",      angleDeg:-150, mode:"icon" },
+    ];
+
+    const radius = 118; // 아이콘+텍스트 기준 (겹치면 128~138로 올려도 됨)
+
+    // 메뉴 아이템 생성(1회)
+    function build(){
+      // 기존 아이템 제거(재빌드 대비)
+      menu.querySelectorAll(".rm-item").forEach(el=>el.remove());
+
+      actions.forEach(a=>{
+        const rad = (a.angleDeg * Math.PI) / 180;
+        const dx = Math.cos(rad) * radius;
+        const dy = Math.sin(rad) * radius;
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "rm-item" + (a.mode === "icon" ? " icon-only" : "");
+        btn.setAttribute("role","menuitem");
+
+        btn.innerHTML = `
+          <span class="rm-ico">${a.icon}</span>
+          <span class="rm-label">${a.label}</span>
+        `;
+
+        btn.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+
+        btn.addEventListener("click", (e)=>{
+          e.stopPropagation();
+          const target = document.getElementById(a.btnId);
+          if(target) target.click();
+          hide();
+        });
+
+        menu.appendChild(btn);
+      });
+    }
+    build();
+
+    let isOpen = false;
+
+    function clamp(n, min, max){ return Math.max(min, Math.min(n, max)); }
+
+    function showAt(x, y){
+      // 메뉴 크기 기준으로 화면 밖으로 안 나가게 clamp
+      const size = 260; // .radial-menu width/height
+      const half = size / 2;
+      const cx = clamp(x, half + 10, window.innerWidth  - half - 10);
+      const cy = clamp(y, half + 10, window.innerHeight - half - 10);
+
+      menu.style.left = cx + "px";
+      menu.style.top  = cy + "px";
+
+      wrap.classList.add("show");
+      wrap.setAttribute("aria-hidden","false");
+      isOpen = true;
+    }
+
+    function hide(){
+      wrap.classList.remove("show");
+      wrap.setAttribute("aria-hidden","true");
+      isOpen = false;
+    }
+
+    // ✅ 우클릭(컨텍스트 메뉴)로 열기
+    document.addEventListener("contextmenu", (e)=>{
+      // 입력창/텍스트 선택은 기본 우클릭 유지하고 싶으면 여기서 return
+      const t = e.target;
+      const allowNative =
+        t && (
+          t.closest("input, textarea, [contenteditable='true']") ||
+          t.closest(".sw-result") // 결과표에서 우클릭은 그냥 두고 싶으면 유지(원하면 삭제)
+        );
+
+      if(allowNative) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      if(isOpen) hide();
+      showAt(e.clientX, e.clientY);
+    }, { capture:true });
+
+    // 닫기 UX
+    backdrop.addEventListener("click", hide);
+    center.addEventListener("click", hide);
+
+    document.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape" && isOpen) hide();
+    });
+
+    // 다른 곳 클릭 시 닫기(이미 backdrop이 있지만 안전망)
+    document.addEventListener("click", (e)=>{
+      if(!isOpen) return;
+      const inside = menu.contains(e.target);
+      if(!inside) hide();
+    }, true);
+  })();
+
+
   /* ======================
      init
      ====================== */
@@ -3215,6 +3783,66 @@ document.addEventListener("DOMContentLoaded", () => {
   buildCalendar();
   updateTodayBadge();
 });
+</script>
+
+<div class="radial-wrap" id="radialWrap" aria-hidden="true">
+  <div class="radial-backdrop" id="radialBackdrop"></div>
+  <div class="radial-menu" id="radialMenu">
+    <div class="radial-center" id="radialCenter">
+      <div>TOOLS</div><div>Right click</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+ const wrap=document.getElementById("radialWrap");
+ const menu=document.getElementById("radialMenu");
+ const back=document.getElementById("radialBackdrop");
+ if(!wrap||!menu)return;
+
+ const actions=[
+ {btnId:"searchWidgetBtn",label:"Items",icon:"🔎",deg:-90},
+ {btnId:"phoneFormatBtn",label:"Phone",icon:"📞",deg:-30},
+ {btnId:"sheetNavBtn",label:"Sheets",icon:"📄",deg:30},
+ {btnId:"trackingWidgetBtn",label:"Track",icon:"📦",deg:90},
+ {btnId:"accountWidgetBtn",label:"",icon:"🔑",deg:150,iconOnly:true},
+ {btnId:"adminEventBtn",label:"",icon:"🔔",deg:-150,iconOnly:true},
+ ];
+ const R=118;
+
+ actions.forEach(a=>{
+   const b=document.createElement("button");
+   b.className="rm-item"+(a.iconOnly?" icon-only":"");
+   b.innerHTML=a.icon+(a.label?`<span>${a.label}</span>`:"");
+   const rad=a.deg*Math.PI/180;
+   b.style.transform=`translate(calc(-50% + ${Math.cos(rad)*R}px),
+                                calc(-50% + ${Math.sin(rad)*R}px))`;
+   b.onclick=e=>{e.stopPropagation();
+     const t=document.getElementById(a.btnId);
+     if(t)t.click();
+     hide();
+   };
+   menu.appendChild(b);
+ });
+
+ let open=false;
+ function show(x,y){
+   menu.style.left=x+"px";menu.style.top=y+"px";
+   wrap.classList.add("show");open=true;
+ }
+ function hide(){wrap.classList.remove("show");open=false;}
+
+ document.addEventListener("contextmenu",e=>{
+   const t=e.target;
+   if(t.closest("input,textarea,[contenteditable]"))return;
+   e.preventDefault();
+   open?hide():show(e.clientX,e.clientY);
+ },true);
+
+ back.onclick=hide;
+ document.addEventListener("keydown",e=>{if(e.key==="Escape")hide();});
+})();
 </script>
 </body>
 </html>
