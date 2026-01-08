@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -174,22 +173,20 @@ body{
 
 /* ===== Sidebar footer "card" (final, unified) ===== */
 .nav-footer{
-  width: 96px;                 /* ✅ 살짝 넓혀서 아이콘+텍스트 여유 */
+  width: 74px;
   margin: 0 auto 6px;
-  padding: 14px 10px 12px;     /* ✅ 위/아래 여유 */
-  display: flex;
-  flex-direction: column;      /* ✅ 세로 유지 */
-  border-radius: 20px;
+  padding:  12px 8px 10px;
+    display: flex; 
+  border-radius: 18px;
   background: rgba(255,255,255,0.14);
   border: 1px solid rgba(255,255,255,0.22);
   box-shadow: 0 14px 28px rgba(15,23,42,0.16);
-  gap: 14px;                   /* ✅ 버튼 사이 간격 */
-  overflow: visible;
+   gap: 10px; 
 }
 
 .nav-footer-row{
   display:flex;
-  gap: 12px;
+  gap:10px;
   margin-bottom:8px;
   justify-content:center;
 }
@@ -199,51 +196,26 @@ body{
   background: rgba(255,255,255,0.18);
   color: rgba(255,255,255,0.92);
   border-radius: 18px;
-  padding: 12px 12px;          /* ✅ 높이/여유 증가 */
-  min-height: 44px;            /* ✅ 버튼 키우기 */
+ padding: 10px 10px; 
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;                   /* ✅ 아이콘-텍스트 간격 */
-  font-size: 11px;             /* ✅ 요청: 11px */
+  gap: 8px;
+  font-size: 10px;
   font-weight: 900;
-  white-space: nowrap;         /* ✅ 텍스트 줄바꿈 방지 */
   box-shadow: 0 10px 22px rgba(15,23,42,0.22);
-  transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
   user-select:none;
 }
 
-/* ✅ 클릭 시 '살짝 퍼지는' 마이크로 애니메이션 */
-.nav-footer-btn::after{
-  content:"";
-  position:absolute;
-  inset:-20%;
-  background: radial-gradient(circle at center, rgba(255,255,255,0.38), transparent 62%);
-  opacity: 0;
-  transform: scale(0.72);
-  transition: opacity .18s ease, transform .18s ease;
-  pointer-events:none;
-}
-
-.nav-footer-btn:active::after{
-  opacity: 1;
-  transform: scale(1.18);
-}
-
-.nav-footer-btn:active{
-  transform: translateY(0) scale(0.98);
-}
+.nav-footer-btn i{ font-size: 13px; }
 
 .nav-footer-btn:hover{
-  transform: translateY(-1px) scale(1.04); /* ✅ hover 시 살짝 확장 */
+  transform: translateY(-1px);
   background: rgba(255,255,255,0.26);
   box-shadow: 0 14px 28px rgba(15,23,42,0.22);
 }
-
-.nav-footer-btn i{ font-size: 13px; }
 
 .nav-footer-btn.icon-only{
   width: 35px;
@@ -418,7 +390,6 @@ body{
 }
 
 .card{
-  position: relative;
   width:100%;
   height:100%;
   border-radius: 24px;
@@ -1554,45 +1525,6 @@ iframe{
     min-height:70vh;
   }
 }
-
-/* ✅ iframe 위에서도 우클릭 메뉴를 잡기 위한 오버레이 (토글식)
-   - body.radial-pin 일 때만 iframe 위에서 우클릭을 가로챔
-   - 평소엔 pointer-events:none → iframe 클릭/스크롤 정상
-*/
-.card{ position: relative; }
-
-.iframe-overlay{
-  position: absolute;
-  inset: 10px; /* .card padding과 맞춤 */
-  border-radius: 16px;
-  background: transparent;
-  pointer-events: none;
-}
-
-.tracking-frame-wrapper{ position: relative; }
-.tracking-frame-wrapper .iframe-overlay{ inset: 0; border-radius: 16px; }
-
-.sw-preview-body{ position: relative; }
-.sw-preview-body .iframe-overlay{ inset: 0; border-radius: 0; }
-
-body.radial-pin .iframe-overlay{
-  pointer-events: auto;
-  cursor: context-menu;
-}
-
-/* =========================================================
-   ✅ Widgets footer: keep vertical layout + wider spacing + micro animation
-   ========================================================= */
-/* ✅ 섹션 자체도 조금 더 도드라지게(살짝 밝은 글로우) */
-.nav-section-title{
-  text-shadow: 0 6px 16px rgba(15,23,42,0.22);
-}
-.nav-footer{
-  box-shadow:
-    0 18px 40px rgba(15,23,42,0.20),
-    inset 0 1px 0 rgba(255,255,255,0.18);
-}
-
 </style>
 
 </head>
@@ -1665,7 +1597,11 @@ body.radial-pin .iframe-overlay{
         <button class="nav-footer-btn icon-only" id="accountWidgetBtn" type="button" title="계정 조회">
           <i class='bx bx-key'></i><span class="sr-only">ID/PW</span>
         </button>
-</div>
+
+        <button class="nav-footer-btn icon-only" id="adminEventBtn" type="button" title="이벤트 보기">
+          <i class='bx bx-calendar-event'></i><span class="sr-only">Event</span>
+        </button>
+      </div>
     </div>
   </div>
 </nav>
@@ -1786,7 +1722,6 @@ body.radial-pin .iframe-overlay{
   <div class="content">
     <div class="card">
       <iframe src="https://wskimkj.github.io/search/" id="mainFrame"></iframe>
-      <div class="iframe-overlay" data-overlay-for="mainFrame" aria-hidden="true"></div>
     </div>
   </div>
 
@@ -1822,7 +1757,6 @@ body.radial-pin .iframe-overlay{
         </div>
         <div class="sw-preview-body">
           <iframe id="swPreviewFrame" title="상품 상세 미리보기"></iframe>
-          <div class="iframe-overlay" data-overlay-for="swPreviewFrame" aria-hidden="true"></div>
         </div>
       </div>
     </div>
@@ -1878,7 +1812,6 @@ body.radial-pin .iframe-overlay{
         <div id="trackingResultHeader" class="tracking-result-header"></div>
         <div class="tracking-frame-wrapper">
           <iframe id="trackingFrame"></iframe>
-          <div class="iframe-overlay" data-overlay-for="trackingFrame" aria-hidden="true"></div>
         </div>
       </div>
     </div>
@@ -2167,28 +2100,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const accountGo = document.getElementById("accountGo");
 
   const mainFrame = document.getElementById("mainFrame");
-
-  // ✅ (옵션) iframe 위에서도 우클릭 메뉴 사용: Alt 누르는 동안만 투명 오버레이 ON
-  const iframeOverlay = document.getElementById("iframeOverlay");
-  let overlayHold = false;
-  function setOverlay(on){
-    if(!iframeOverlay) return;
-    iframeOverlay.classList.toggle("on", !!on);
-    iframeOverlay.setAttribute("aria-hidden", String(!on));
-  }
-  document.addEventListener("keydown", (e)=>{
-    if(e.key === "Alt" && !overlayHold){
-      overlayHold = true;
-      setOverlay(true);
-    }
-  });
-  document.addEventListener("keyup", (e)=>{
-    if(e.key === "Alt"){
-      overlayHold = false;
-      setOverlay(false);
-    }
-  });
-  window.addEventListener("blur", ()=>{ overlayHold = false; setOverlay(false); });
   const navItems = document.querySelectorAll(".nav-item");
 
   const subSidebar = document.getElementById("subSidebar");
@@ -2217,13 +2128,6 @@ document.addEventListener("DOMContentLoaded", () => {
     sidebarDateEl.textContent = `${dd}(${dow})`;
   }
   setSidebarToday();
-
-  // ✅ 날짜 버튼 클릭 = 캘린더 토글
-  sidebarDateEl.addEventListener("click", (e)=>{
-    toggleCalendar();
-    e.stopPropagation();
-  });
-
 
   /* ======================
      iframe restore
@@ -3434,7 +3338,7 @@ document.addEventListener("DOMContentLoaded", () => {
       buildCalendar();
     }
   }
-  if(adminEventBtn){ adminEventBtn.addEventListener("click",(e)=>{ toggleCalendar(); e.stopPropagation(); }); }
+  adminEventBtn.addEventListener("click",(e)=>{ toggleCalendar(); e.stopPropagation(); });
 
   const CAL_VIEW_KEY = "calendarViewMode";
   let calendarViewMode = localStorage.getItem(CAL_VIEW_KEY) || "week";
@@ -3795,7 +3699,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const clickedGoogle = googleBtn.contains(t) || subSidebar.contains(t);
     const clickedUtil   = utilBtn.contains(t) || utilSidebar.contains(t);
 
-    const clickedInsideCalendar = calendarWidget.contains(t) || (adminEventBtn && adminEventBtn.contains(t));
+    const clickedInsideCalendar = calendarWidget.contains(t) || adminEventBtn.contains(t);
     const clickedInsidePhone = phoneWidget.contains(t) || phoneFormatBtn.contains(t);
     const clickedInsideTracking = trackingWidget.contains(t) || trackingWidgetBtn.contains(t);
     const clickedInsideAccount = accountWidget.contains(t) || accountWidgetBtn.contains(t);
@@ -3867,35 +3771,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const backdrop = document.getElementById("radialBackdrop");
     const center = document.getElementById("radialCenter");
 
-    if\(!wrap \|\| !menu \|\| !backdrop \|\| !center\) return;
-
-    // ✅ iframe 위에서도 우클릭 메뉴를 쓰고 싶으면 "핀(PIN)" 모드가 필요함
-    // - 브라우저 보안상 iframe 안의 우클릭 이벤트는 부모 문서가 못 잡음
-    // - 그래서 투명 오버레이를 깔아 대신 받는 방식(핀 모드에서만 ON)
-    const PIN_KEY = "radialPinned";
-    let pinned = localStorage.getItem(PIN_KEY) === "1";
-
-    function applyPinned(){
-      document.body.classList.toggle("radial-pin", pinned);
-      // center 텍스트에 상태 표시
-      const t2 = center.querySelector(".t2");
-      if(t2) t2.textContent = pinned ? "Pinned (iframe ON)" : "Right click";
-      center.title = pinned
-        ? "핀 모드: iframe 위에서도 우클릭 메뉴(대신 iframe 클릭/스크롤 불가)
-Alt+R 로 토글"
-        : "우클릭 메뉴
-Alt+R 로 '핀 모드(iframe ON)' 토글";
-    }
-    applyPinned();
-
-    // ✅ Alt+R 로 핀 모드 토글
-    document.addEventListener("keydown", (e)=>{
-      if(e.altKey && (e.key === "r" || e.key === "R")){
-        pinned = !pinned;
-        localStorage.setItem(PIN_KEY, pinned ? "1" : "0");
-        applyPinned();
-      }
-    }, true);
+    if(!wrap || !menu || !backdrop || !center) return;
 
     // ✅ 너가 이미 가진 버튼 ID를 그대로 "대신 클릭"
     const actions = [
@@ -3906,7 +3782,8 @@ Alt+R 로 '핀 모드(iframe ON)' 토글";
 
       // ✅ 아래 2개는 icon-only
       { id:"idpw",   label:"ID/PW",  icon:"<i class='bx bx-key'></i>",         btnId:"accountWidgetBtn",   angleDeg:150,  mode:"icon" },
-      ];
+      { id:"event",  label:"event",  icon:"<i class='bx bx-bell'></i>",        btnId:"adminEventBtn",      angleDeg:-150, mode:"icon" },
+    ];
 
     const radius = 118; // 아이콘+텍스트 기준 (겹치면 128~138로 올려도 됨)
 
@@ -3973,7 +3850,11 @@ Alt+R 로 '핀 모드(iframe ON)' 토글";
     document.addEventListener("contextmenu", (e)=>{
       // 입력창/텍스트 선택은 기본 우클릭 유지하고 싶으면 여기서 return
       const t = e.target;
-      const allowNative = t && (t.closest("input, textarea, [contenteditable='true']"));
+      const allowNative =
+        t && (
+          t.closest("input, textarea, [contenteditable='true']") ||
+          t.closest(".sw-result") // 결과표에서 우클릭은 그냥 두고 싶으면 유지(원하면 삭제)
+        );
 
       if(allowNative) return;
 
@@ -3984,32 +3865,9 @@ Alt+R 로 '핀 모드(iframe ON)' 토글";
       showAt(e.clientX, e.clientY);
     }, { capture:true });
 
-    // ✅ iframe 위에서도 (mainFrame 영역) 우클릭 라디얼 메뉴 열기
-    // - cross-origin iframe 내부 DOM은 접근 불가하지만,
-    //   iframe element 자체에 contextmenu 이벤트를 붙이면 "프레임 영역" 우클릭을 잡을 수 있음
-    const frameEl = document.getElementById("mainFrame");
-    if(frameEl){
-      frameEl.addEventListener("contextmenu", (e)=>{
-        e.preventDefault();
-        e.stopPropagation();
-        if(isOpen) hide();
-        showAt(e.clientX, e.clientY);
-      }, { capture:true });
-    }
-
-
     // 닫기 UX
     backdrop.addEventListener("click", hide);
-    center.addEventListener("click", (e)=>{
-      // Alt+클릭 = 핀 모드 토글
-      if(e.altKey){
-        pinned = !pinned;
-        localStorage.setItem(PIN_KEY, pinned ? "1" : "0");
-        applyPinned();
-        return;
-      }
-      hide();
-    });
+    center.addEventListener("click", hide);
 
     document.addEventListener("keydown", (e)=>{
       if(e.key === "Escape" && isOpen) hide();
@@ -4033,5 +3891,64 @@ Alt+R 로 '핀 모드(iframe ON)' 토글";
 });
 </script>
 
+<div class="radial-wrap" id="radialWrap" aria-hidden="true">
+  <div class="radial-backdrop" id="radialBackdrop"></div>
+  <div class="radial-menu" id="radialMenu">
+    <div class="radial-center" id="radialCenter">
+      <div>TOOLS</div><div>Right click</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+ const wrap=document.getElementById("radialWrap");
+ const menu=document.getElementById("radialMenu");
+ const back=document.getElementById("radialBackdrop");
+ if(!wrap||!menu)return;
+
+ const actions=[
+ {btnId:"searchWidgetBtn",label:"Items",icon:"🔎",deg:-90},
+ {btnId:"phoneFormatBtn",label:"Phone",icon:"📞",deg:-30},
+ {btnId:"sheetNavBtn",label:"Sheets",icon:"📄",deg:30},
+ {btnId:"trackingWidgetBtn",label:"Track",icon:"📦",deg:90},
+ {btnId:"accountWidgetBtn",label:"",icon:"🔑",deg:150,iconOnly:true},
+ {btnId:"adminEventBtn",label:"",icon:"🔔",deg:-150,iconOnly:true},
+ ];
+ const R=118;
+
+ actions.forEach(a=>{
+   const b=document.createElement("button");
+   b.className="rm-item"+(a.iconOnly?" icon-only":"");
+   b.innerHTML=a.icon+(a.label?`<span>${a.label}</span>`:"");
+   const rad=a.deg*Math.PI/180;
+   b.style.transform=`translate(calc(-50% + ${Math.cos(rad)*R}px),
+                                calc(-50% + ${Math.sin(rad)*R}px))`;
+   b.onclick=e=>{e.stopPropagation();
+     const t=document.getElementById(a.btnId);
+     if(t)t.click();
+     hide();
+   };
+   menu.appendChild(b);
+ });
+
+ let open=false;
+ function show(x,y){
+   menu.style.left=x+"px";menu.style.top=y+"px";
+   wrap.classList.add("show");open=true;
+ }
+ function hide(){wrap.classList.remove("show");open=false;}
+
+ document.addEventListener("contextmenu",e=>{
+   const t=e.target;
+   if(t.closest("input,textarea,[contenteditable]"))return;
+   e.preventDefault();
+   open?hide():show(e.clientX,e.clientY);
+ },true);
+
+ back.onclick=hide;
+ document.addEventListener("keydown",e=>{if(e.key==="Escape")hide();});
+})();
+</script>
 </body>
 </html>
